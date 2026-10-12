@@ -1,0 +1,14 @@
+metric,value
+raw_model_features,29
+pre_encoding_features,34
+final_transformed_features,55
+numeric_features,18
+categorical_features,5
+binary_features,6
+sentinel_indicators,5
+train_rows,794989
+validation_rows,108168
+train_batches_batch_size_1024,777
+validation_batches_batch_size_1024,106
+output_dtype,float32
+test_full_matrix_materialized,False

@@ -1,0 +1,35 @@
+feature,source_feature,feature_group,derived,preprocessing,fit_scope,output_width,output_dtype
+income,income,numeric,False,StandardScaler,train_only,1,float32
+name_email_similarity,name_email_similarity,numeric,False,StandardScaler,train_only,1,float32
+prev_address_months_count,prev_address_months_count,numeric,False,StandardScaler,train_only,1,float32
+current_address_months_count,current_address_months_count,numeric,False,StandardScaler,train_only,1,float32
+customer_age,customer_age,numeric,False,StandardScaler,train_only,1,float32
+days_since_request,days_since_request,numeric,False,StandardScaler,train_only,1,float32
+intended_balcon_amount,intended_balcon_amount,numeric,False,StandardScaler,train_only,1,float32
+zip_count_4w,zip_count_4w,numeric,False,StandardScaler,train_only,1,float32
+velocity_6h,velocity_6h,numeric,False,StandardScaler,train_only,1,float32
+velocity_24h,velocity_24h,numeric,False,StandardScaler,train_only,1,float32
+velocity_4w,velocity_4w,numeric,False,StandardScaler,train_only,1,float32
+bank_branch_count_8w,bank_branch_count_8w,numeric,False,StandardScaler,train_only,1,float32
+date_of_birth_distinct_emails_4w,date_of_birth_distinct_emails_4w,numeric,False,StandardScaler,train_only,1,float32
+credit_risk_score,credit_risk_score,numeric,False,StandardScaler,train_only,1,float32
+bank_months_count,bank_months_count,numeric,False,StandardScaler,train_only,1,float32
+proposed_credit_limit,proposed_credit_limit,numeric,False,StandardScaler,train_only,1,float32
+session_length_in_minutes,session_length_in_minutes,numeric,False,StandardScaler,train_only,1,float32
+device_distinct_emails_8w,device_distinct_emails_8w,numeric,False,StandardScaler,train_only,1,float32
+payment_type,payment_type,categorical,False,OneHotEncoder(handle_unknown='ignore'),train_only,5,float32
+employment_status,employment_status,categorical,False,OneHotEncoder(handle_unknown='ignore'),train_only,7,float32
+housing_status,housing_status,categorical,False,OneHotEncoder(handle_unknown='ignore'),train_only,7,float32
+source,source,categorical,False,OneHotEncoder(handle_unknown='ignore'),train_only,2,float32
+device_os,device_os,categorical,False,OneHotEncoder(handle_unknown='ignore'),train_only,5,float32
+email_is_free,email_is_free,binary,False,passthrough,none,1,float32
+phone_home_valid,phone_home_valid,binary,False,passthrough,none,1,float32
+phone_mobile_valid,phone_mobile_valid,binary,False,passthrough,none,1,float32
+has_other_cards,has_other_cards,binary,False,passthrough,none,1,float32
+foreign_request,foreign_request,binary,False,passthrough,none,1,float32
+keep_alive_session,keep_alive_session,binary,False,passthrough,none,1,float32
+prev_address_months_count__is_minus_one,prev_address_months_count,sentinel_indicator,True,indicator(value == -1) + passthrough,none,1,float32
+current_address_months_count__is_minus_one,current_address_months_count,sentinel_indicator,True,indicator(value == -1) + passthrough,none,1,float32
+bank_months_count__is_minus_one,bank_months_count,sentinel_indicator,True,indicator(value == -1) + passthrough,none,1,float32
+session_length_in_minutes__is_minus_one,session_length_in_minutes,sentinel_indicator,True,indicator(value == -1) + passthrough,none,1,float32
+device_distinct_emails_8w__is_minus_one,device_distinct_emails_8w,sentinel_indicator,True,indicator(value == -1) + passthrough,none,1,float32
