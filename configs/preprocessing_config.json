@@ -1,0 +1,58 @@
+{
+  "version": "1.0",
+  "target_column": "fraud_bool",
+  "excluded_features": [
+    "fraud_bool",
+    "month",
+    "device_fraud_count"
+  ],
+  "categorical_features": [
+    "payment_type",
+    "employment_status",
+    "housing_status",
+    "source",
+    "device_os"
+  ],
+  "binary_features": [
+    "email_is_free",
+    "phone_home_valid",
+    "phone_mobile_valid",
+    "has_other_cards",
+    "foreign_request",
+    "keep_alive_session"
+  ],
+  "numeric_features": [
+  "income",
+  "name_email_similarity",
+  "prev_address_months_count",
+  "current_address_months_count",
+  "customer_age",
+  "days_since_request",
+  "intended_balcon_amount",
+  "zip_count_4w",
+  "velocity_6h",
+  "velocity_24h",
+  "velocity_4w",
+  "bank_branch_count_8w",
+  "date_of_birth_distinct_emails_4w",
+  "credit_risk_score",
+  "bank_months_count",
+  "proposed_credit_limit",
+  "session_length_in_minutes",
+  "device_distinct_emails_8w"
+],
+  "sentinel_features": [
+    "prev_address_months_count",
+    "current_address_months_count",
+    "bank_months_count",
+    "session_length_in_minutes",
+    "device_distinct_emails_8w"
+  ],
+  "sentinel_value": -1,
+  "numeric_scaling": "standard",
+  "categorical_encoding": "one_hot",
+  "unknown_category_policy": "ignore",
+  "output_dtype": "float32",
+  "initial_model_uses_month": false,
+  "test_split_sealed_until_milestone": 7
+}
