@@ -1,0 +1,55 @@
+﻿# Virtual environments
+.venv/
+venv/
+
+# Python cache and build artifacts
+__pycache__/
+*.py[cod]
+*.pyd
+*.egg-info/
+build/
+dist/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Testing and coverage
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+
+# Data
+data/raw/*
+data/processed/*
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+
+# Model artifacts and experiment runs
+models/*
+!models/.gitkeep
+mlruns/
+artifacts/
+checkpoints/
+*.pt
+*.pth
+*.ckpt
+
+# MLflow local database/artifacts
+mlflow.db
+
+# Logs
+*.log
+logs/
+
+# OS files
+Thumbs.db
+.DS_Store
+
+# IDE-specific local settings
+.vscode/
+.idea/
