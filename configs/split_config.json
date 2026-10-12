@@ -1,0 +1,38 @@
+{
+  "version": "1.0",
+  "dataset": "Base.csv",
+  "target": "fraud_bool",
+  "temporal_field": "month",
+  "strategy": "chronological",
+  "train": {
+    "months": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "rule": "month <= 5",
+    "records": 794989,
+    "fraud_cases": 8151
+  },
+  "validation": {
+    "months": [
+      6
+    ],
+    "rule": "month == 6",
+    "records": 108168,
+    "fraud_cases": 1450
+  },
+  "test": {
+    "months": [
+      7
+    ],
+    "rule": "month == 7",
+    "records": 96843,
+    "fraud_cases": 1428,
+    "sealed": true
+  },
+  "month_used_as_model_feature_initially": false
+}

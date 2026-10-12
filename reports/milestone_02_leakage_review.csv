@@ -1,0 +1,33 @@
+column,role,leakage_status,review_reason
+fraud_bool,target,exclude_from_features,Outcome label; never used as an input feature.
+income,candidate_predictor,requires_definition_review,Verify that the feature exists at prediction time and is not derived from future or post-outcome information.
+name_email_similarity,candidate_predictor,requires_definition_review,Verify that the feature exists at prediction time and is not derived from future or post-outcome information.
+prev_address_months_count,candidate_predictor,requires_definition_review,Verify that the feature exists at prediction time and is not derived from future or post-outcome information.
+current_address_months_count,candidate_predictor,requires_definition_review,Verify that the feature exists at prediction time and is not derived from future or post-outcome information.
+customer_age,candidate_predictor,requires_definition_review,Verify that the feature exists at prediction time and is not derived from future or post-outcome information.
+days_since_request,candidate_predictor,requires_definition_review,Verify that the feature exists at prediction time and is not derived from future or post-outcome information.
+intended_balcon_amount,candidate_predictor,requires_definition_review,Verify that the feature exists at prediction time and is not derived from future or post-outcome information.
+payment_type,candidate_predictor,requires_definition_review,Verify that the feature exists at prediction time and is not derived from future or post-outcome information.
+zip_count_4w,candidate_predictor,requires_definition_review,Verify that the feature exists at prediction time and is not derived from future or post-outcome information.
+velocity_6h,candidate_predictor,requires_definition_review,Verify that the feature exists at prediction time and is not derived from future or post-outcome information.
+velocity_24h,candidate_predictor,requires_definition_review,Verify that the feature exists at prediction time and is not derived from future or post-outcome information.
+velocity_4w,candidate_predictor,requires_definition_review,Verify that the feature exists at prediction time and is not derived from future or post-outcome information.
+bank_branch_count_8w,candidate_predictor,requires_definition_review,Verify that the feature exists at prediction time and is not derived from future or post-outcome information.
+date_of_birth_distinct_emails_4w,candidate_predictor,requires_definition_review,Verify that the feature exists at prediction time and is not derived from future or post-outcome information.
+employment_status,candidate_predictor,requires_definition_review,Verify that the feature exists at prediction time and is not derived from future or post-outcome information.
+credit_risk_score,candidate_predictor,high_priority_review,Derived risk score. Must verify that it is calculated using only information available before the fraud decision.
+email_is_free,candidate_predictor,requires_definition_review,Verify that the feature exists at prediction time and is not derived from future or post-outcome information.
+housing_status,candidate_predictor,requires_definition_review,Verify that the feature exists at prediction time and is not derived from future or post-outcome information.
+phone_home_valid,candidate_predictor,requires_definition_review,Verify that the feature exists at prediction time and is not derived from future or post-outcome information.
+phone_mobile_valid,candidate_predictor,requires_definition_review,Verify that the feature exists at prediction time and is not derived from future or post-outcome information.
+bank_months_count,candidate_predictor,requires_definition_review,Verify that the feature exists at prediction time and is not derived from future or post-outcome information.
+has_other_cards,candidate_predictor,requires_definition_review,Verify that the feature exists at prediction time and is not derived from future or post-outcome information.
+proposed_credit_limit,candidate_predictor,requires_definition_review,Verify that the feature exists at prediction time and is not derived from future or post-outcome information.
+foreign_request,candidate_predictor,requires_definition_review,Verify that the feature exists at prediction time and is not derived from future or post-outcome information.
+source,candidate_predictor,requires_definition_review,Verify that the feature exists at prediction time and is not derived from future or post-outcome information.
+session_length_in_minutes,candidate_predictor,requires_definition_review,Verify that the feature exists at prediction time and is not derived from future or post-outcome information.
+device_os,candidate_predictor,requires_definition_review,Verify that the feature exists at prediction time and is not derived from future or post-outcome information.
+keep_alive_session,candidate_predictor,requires_definition_review,Verify that the feature exists at prediction time and is not derived from future or post-outcome information.
+device_distinct_emails_8w,candidate_predictor,requires_definition_review,Verify that the feature exists at prediction time and is not derived from future or post-outcome information.
+device_fraud_count,candidate_predictor,high_priority_review,Feature name directly references fraud and could potentially encode outcome-related information. It is also constant in Base.csv.
+month,temporal_split_field,hold_for_split_review,Represents ordered time. Review for split design before deciding whether it should also be a model feature.
