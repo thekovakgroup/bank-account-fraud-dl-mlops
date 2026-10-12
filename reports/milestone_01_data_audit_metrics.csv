@@ -1,0 +1,13 @@
+metric,value
+row_count,1000000.0
+column_count,32.0
+fraud_count,11029.0
+fraud_rate,0.011029
+standard_missing_values,0.0
+exact_duplicate_rows,0.0
+duplicate_feature_pattern_rows,0.0
+constant_feature_count,1.0
+categorical_feature_count,5.0
+binary_indicator_count,6.0
+sentinel_candidate_count,5.0
+month_count,8.0
