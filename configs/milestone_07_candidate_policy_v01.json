@@ -1,0 +1,66 @@
+{
+  "milestone": "07",
+  "policy_version": "v01",
+  "status": "FROZEN_PROVISIONAL_CANDIDATE",
+  "production_approved": false,
+  "model": {
+    "type": "FraudMLP",
+    "architecture": [
+      55,
+      64,
+      32,
+      1
+    ],
+    "calibration": "sigmoid_platt",
+    "checkpoint_sha256": "cea166c0aee86227de2bcf64dce937e81a3c4c6ba60d24577a51026dc1a4ae46",
+    "calibrator_bundle_sha256": "ce74364ccef575985bfc938d396f33cf02425a2fb406ad0c8a65cb5c5316be3a"
+  },
+  "data_protocol": {
+    "training_months": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "calibration_month": 5,
+    "exploratory_evaluation_month": 6,
+    "holdout_month": 7,
+    "holdout_status": "SEALED",
+    "month_6_used_in_candidate_comparison": true
+  },
+  "business_assumptions": {
+    "currency": "USD",
+    "hypothetical": true,
+    "investigation_cost": 25.0,
+    "additional_false_positive_cost": 10.0,
+    "fraud_loss_per_case": 1000.0,
+    "prevention_rate": 0.7
+  },
+  "decision_rule": {
+    "probability_threshold": 0.04929577464788732,
+    "maximum_investigation_fraction": 0.05,
+    "investigate_if": "calibrated_probability > threshold",
+    "priority": "descending_calibrated_probability",
+    "capacity_count_rule": "floor(0.05 * application_count)",
+    "tie_breaker": "stable_input_order_provisional"
+  },
+  "exploratory_month_6": {
+    "applications": 108168,
+    "fraud_cases": 1450,
+    "investigations": 5408,
+    "fraud_caught": 705,
+    "hypothetical_savings_usd": 311270.0
+  },
+  "audit_file_checksums": {
+    "risk_band_audit.csv": "c17bb47c82a922f674b4e97c86e56735a86ade8979f24b75699c841a0ff34545",
+    "investigation_pool_audit.csv": "24f8389ed69ce09b5fa108535df9cef6b70f69828cf13f3c16bdd0d202b6cbee"
+  },
+  "limitations": [
+    "Month 6 was previously used for model comparison.",
+    "Financial assumptions are hypothetical.",
+    "Policy is not independently holdout-validated.",
+    "Production requires an immutable application-ID tie-breaker.",
+    "Risk-band calibration varies across score ranges."
+  ]
+}
