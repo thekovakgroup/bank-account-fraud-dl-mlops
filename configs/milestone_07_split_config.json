@@ -1,0 +1,41 @@
+
+{
+  "version": "1.0",
+  "milestone": "07",
+  "dataset": "Base.csv",
+  "target": "fraud_bool",
+  "temporal_field": "month",
+  "strategy": "chronological_calibration",
+
+  "train": {
+    "months": [0, 1, 2, 3, 4],
+    "purpose": "Fit preprocessing and calibration-development models"
+  },
+
+  "calibration": {
+    "months": [5],
+    "purpose": "Fit calibrators on out-of-sample model predictions"
+  },
+
+  "evaluation": {
+    "months": [6],
+    "purpose": "Exploratory calibration and operational evaluation",
+    "previously_used_for_model_selection": true
+  },
+
+  "holdout": {
+    "months": [7],
+    "status": "SEALED",
+    "access_allowed": false
+  },
+
+  "safeguards": {
+    "fit_preprocessing_on": "train",
+    "fit_base_models_on": "train",
+    "fit_calibrators_on": "calibration",
+    "exclude_target_from_features": true,
+    "exclude_month_from_features": true,
+    "exclude_device_fraud_count": true,
+    "prohibit_holdout_access": true
+  }
+}
