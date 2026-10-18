@@ -62,12 +62,51 @@ tests/
 
 ## Current Status
 
-- **Milestones 01–05:** Completed.
-- **Milestone 06 — Model Improvement & Hyperparameter Tuning:** Model experiments, evaluation, and MLflow tracking completed. Final GitHub checkpoint pending.
-- **Milestone 07 — Calibration, Business Costs & Threshold Selection:** Not started.
-- **Later milestones:** Explainability, model serving, MLOps, and deployment remain planned.
+- **Milestones 01-06:** Completed and merged into `main`.
+- **Milestone 07 - Calibration and Final Evaluation:** Completed.
+- **Milestone 08 - Explainability and Responsible AI:** Completed and merged.
+- **Milestone 09 - Model Serving API:** Implementation, local verification, documentation, and all 40 API regression tests completed; Git merge pending.
+- **Milestones 10-12:** Remaining MLOps engineering and deployment work.
 
-The final month-7 test set remains **SEALED**.
+### Frozen Model and Evaluation Policy
+
+The selected research candidate is a calibrated PyTorch MLP
+with architecture 55 -> 64 -> 32 -> 1.
+
+The serving pipeline uses:
+- Frozen fitted preprocessing
+- Frozen PyTorch model checkpoint
+- Frozen Platt calibration
+- Frozen operational threshold of approximately 4.9296%
+- Maximum investigation capacity of 5% per complete cohort
+
+The Month-7 final holdout was evaluated after model
+selection and policy freezing. It is no longer sealed
+and must never be reused for tuning or model selection.
+
+The system produces fraud-risk scores for human review.
+It is NOT approved for production use or automated
+bank-account rejection.
+
+### Milestone 09 API
+
+The research-only FastAPI application provides:
+
+- `GET /health` - Application liveness
+- `GET /ready` - Inference engine readiness
+- `POST /predict` - Calibrated fraud-risk scores
+
+Safeguards include strict input validation,
+100-application batch limits, 256 KiB request-body
+protection, model lifecycle checks, privacy-safe
+error logging, and controlled HTTP errors.
+
+Local Uvicorn startup, model readiness, and Swagger
+documentation have been verified successfully.
+
+The API does not make automatic banking decisions.
+The 5% investigation-capacity policy applies to
+complete cohorts, not individual API request batches.
 
 ## Milestone 06 — Model Improvement Results
 
@@ -146,30 +185,215 @@ Open `http://127.0.0.1:5050` and select **Model training**.
 - scikit-learn 1.9.1
 - MLflow 3.17.1
 - `requirements.txt`: Direct dependencies
-- `requirements-lock.txt`: 121 pinned installed packages
+- `requirements-lock.txt`: Pinned local dependency environment, including Milestone 09 API dependencies
 
 GPU experiments were originally executed in Google Colab. Their recorded metrics retain that provenance.
 
-### Next Milestone
 
-Milestone 07 will address calibration, business-cost evaluation, and operating-threshold selection.
+### Historical Milestone 06 Handoff
 
-The month-7 test set must remain sealed until preprocessing, model architecture, hyperparameters, calibration strategy, and threshold policy have been frozen.
+At the conclusion of Milestone 06, calibration,
+threshold selection, and final evaluation were pending.
+
+These activities were subsequently completed during
+Milestone 07.
+
+The Month-7 holdout was evaluated under the frozen
+evaluation protocol and is no longer sealed.
+
+It must not be reused for tuning, calibration,
+threshold optimization, or model selection.
+
+The Milestone 06 experimental findings above are
+preserved as historical development results.
 
 ## Evaluation Policy
 
-The project will preserve a sealed final test set until:
+The final evaluation followed a frozen-model protocol.
 
-- preprocessing is frozen
-- model architecture is frozen
-- hyperparameters are frozen
-- calibration strategy is frozen
-- threshold policy is frozen
+Before the Month-7 holdout was evaluated, the project
+froze its preprocessing, model architecture,
+hyperparameters, calibration strategy, and
+operating-threshold policy.
 
-Final-test results will not be used for model or threshold selection.
+The Month-7 holdout has been consumed and is reserved
+exclusively as a historical final evaluation record.
+
+It must not be used again for:
+- Hyperparameter tuning
+- Threshold optimization
+- Calibration fitting
+- Model selection
+- Additional exploratory experiments
+
+Operational investigation recommendations must respect
+the frozen 5% capacity limit over a complete cohort.
+
+Individual API scoring requests return calibrated
+probabilities only; they do not enforce a cohort-level
+investigation budget or authorize adverse decisions.
 
 ## Responsible AI Position
 
 This project is intended as a fraud-risk decision-support system.
 
 Model output should not be used as the sole basis for automated denial, punitive action, or adverse treatment. High-risk predictions should support human review and documented escalation procedures.
+
+## Milestone 09 - FastAPI Model Serving
+
+### Overview
+
+The project includes a local FastAPI inference service
+that serves calibrated fraud probabilities from the
+frozen PyTorch MLP.
+
+The application is research-only and is not approved
+for production banking decisions.
+
+### Prerequisites
+
+- Python 3.11
+- Project dependencies installed in `.venv`
+- Frozen model and preprocessing artifacts available locally
+- Required model artifact checksums verified
+
+Private model artifacts are excluded from Git.
+A fresh repository clone cannot serve the frozen model
+until the required artifacts have been provisioned.
+
+### Start the API Locally
+
+From the repository root, activate the virtual environment:
+
+```powershell
+.\.venv\Scripts\Activate.ps1
+```
+
+Start the ASGI server:
+
+```powershell
+python -m uvicorn app.main:app --host 127.0.0.1 --port 8000
+```
+
+Wait for:
+
+`Application startup complete.`
+
+Stop the server using `Ctrl + C`.
+
+### API Endpoints
+
+| Method | Endpoint | Purpose |
+|---|---|---|
+| GET | `/health` | Application liveness |
+| GET | `/ready` | Model readiness |
+| POST | `/predict` | Calibrated fraud-risk scoring |
+| GET | `/docs` | Swagger API documentation |
+| GET | `/openapi.json` | OpenAPI specification |
+
+Interactive documentation:
+
+http://127.0.0.1:8000/docs
+
+### Prediction Requests
+
+The `/predict` endpoint accepts a JSON object containing
+an `applications` array.
+
+Each application must contain the 29 required raw features
+defined in `app/schemas.py`.
+
+The API validates numeric, categorical, and binary fields.
+Unknown or excluded features are rejected.
+
+Request limits:
+- Minimum batch size: 1 application
+- Maximum batch size: 100 applications
+- Maximum request body: 256 KiB (262,144 bytes)
+
+Use the interactive Swagger documentation to inspect the
+complete input schema before submitting synthetic requests.
+
+Never submit real customer information during development
+or demonstrations.
+
+### Prediction Responses
+
+Successful responses include:
+
+- Model version derived from the frozen checkpoint SHA256
+- Frozen policy status
+- Explicit `production_approved: false`
+- `decision_type: risk_score_only`
+- Calibrated fraud probability for each application
+- Zero-based application index preserving input order
+
+Probabilities are risk scores, not automatic fraud
+determinations.
+
+The service does not automatically reject bank-account
+applications or select investigations.
+
+### HTTP Error Handling
+
+| Status | Meaning |
+|---|---|
+| 200 | Request completed successfully |
+| 413 | Prediction request body exceeds 256 KiB |
+| 422 | Request validation failed |
+| 500 | Unexpected inference failure |
+| 503 | Inference engine unavailable |
+
+Unexpected inference errors produce sanitized operational
+logs without request bodies or exception tracebacks.
+
+### Operational Safeguards
+
+The application implements:
+
+- Model initialization during application startup
+- Model readiness and lifecycle checks
+- Frozen artifact integrity verification
+- Strict Pydantic input and output validation
+- Request batch and body-size limits
+- Generic client-facing inference errors
+- Privacy-conscious inference failure logging
+- Localhost-only serving instructions
+
+These safeguards do not replace authentication,
+authorization, rate limiting, infrastructure security,
+or a formal production approval process.
+
+### Investigation Policy
+
+The frozen operational policy uses an approximately
+4.9296% threshold and a maximum 5% investigation
+capacity per complete cohort.
+
+The `/predict` API returns probabilities only.
+
+The investigation-capacity policy cannot be enforced
+correctly from independent request batches because
+the complete cohort is required.
+
+All investigation decisions require authorized human
+review.
+
+### Automated Testing
+
+Run the Milestone 09 API tests from the repository root:
+
+```powershell
+
+python -m pytest tests -k api -v
+
+```
+
+The automated API tests use synthetic inference engines
+and do not require private model artifacts.
+
+The real frozen-model API has also been verified locally
+through its startup, readiness, and Swagger endpoints.
+
+The consumed Month-7 holdout must not be reused for
+additional tuning or model selection.

@@ -8,3 +8,6 @@ ipykernel==7.4.0
 pytest==9.1.1
 torch==2.14.1+cpu
 mlflow==3.17.1
+fastapi==0.143.0
+pydantic==2.14.1
+httpx2==2.14.0
