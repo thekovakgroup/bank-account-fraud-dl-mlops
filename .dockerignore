@@ -1,0 +1,106 @@
+
+# ============================================================
+# MILESTONE 10 - SECURE DOCKER BUILD CONTEXT
+# Step 10.07 - Docker Ignore Configuration
+# ============================================================
+
+# ------------------------------------------------------------
+# 1. Git metadata and developer configuration
+# ------------------------------------------------------------
+
+.git
+.github
+.gitignore
+.gitattributes
+.vscode
+.idea
+.DS_Store
+Thumbs.db
+
+# ------------------------------------------------------------
+# 2. Virtual environments and Python cache
+# ------------------------------------------------------------
+
+.venv
+venv
+**/__pycache__
+**/*.pyc
+**/*.pyo
+**/*.pyd
+**/*.egg-info
+.pytest_cache
+.mypy_cache
+.ruff_cache
+build
+dist
+
+# ------------------------------------------------------------
+# 3. Private datasets and trained model artifacts
+# ------------------------------------------------------------
+
+data
+models
+artifacts
+checkpoints
+mlruns
+mlartifacts
+
+**/*.pt
+**/*.pth
+**/*.ckpt
+**/*.joblib
+**/*.pkl
+**/*.pickle
+**/*.safetensors
+**/*.onnx
+**/*.parquet
+**/*.feather
+**/*.arrow
+**/*.csv
+
+# ------------------------------------------------------------
+# 4. Local databases and experiment storage
+# ------------------------------------------------------------
+
+**/*.sqlite
+**/*.sqlite3
+**/*.db
+
+# ------------------------------------------------------------
+# 5. Secrets and sensitive configuration
+# ------------------------------------------------------------
+
+**/.env
+**/.env.*
+**/*.pem
+**/*.key
+**/id_rsa
+**/id_rsa.pub
+
+# ------------------------------------------------------------
+# 6. Development notebooks, tests, and reports
+# ------------------------------------------------------------
+
+notebooks
+tests
+reports
+.ipynb_checkpoints
+**/.ipynb_checkpoints
+
+# ------------------------------------------------------------
+# 7. Logs and coverage artifacts
+# ------------------------------------------------------------
+
+logs
+**/*.log
+.coverage
+htmlcov
+
+# ------------------------------------------------------------
+# 8. Temporary files
+# ------------------------------------------------------------
+
+**/*.tmp
+**/*.bak
+**/*.swp
+**/*.swo
