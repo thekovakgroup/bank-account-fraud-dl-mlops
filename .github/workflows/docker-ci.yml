@@ -1,0 +1,112 @@
+
+# ============================================================
+# MILESTONE 10 - DOCKER BUILD AND VALIDATION
+# Step 10.11 - GitHub Actions CI Workflow
+# ============================================================
+
+name: Docker Build and Validation
+
+# ------------------------------------------------------------
+# 1. Workflow triggers
+# ------------------------------------------------------------
+
+on:
+  push:
+    branches:
+      - milestone-10-container-ci
+
+  pull_request:
+    branches:
+      - main
+
+  workflow_dispatch:
+
+# ------------------------------------------------------------
+# 2. Restrict workflow permissions
+# ------------------------------------------------------------
+
+permissions:
+  contents: read
+
+# ------------------------------------------------------------
+# 3. Docker build and synthetic verification
+# ------------------------------------------------------------
+
+jobs:
+  docker-validation:
+    name: Build and Verify Fraud API
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    steps:
+
+      # ------------------------------------------------------
+      # 4. Download repository source
+      # ------------------------------------------------------
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # ------------------------------------------------------
+      # 5. Enable Docker Buildx
+      # ------------------------------------------------------
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      # ------------------------------------------------------
+      # 6. Build image without publishing it
+      # ------------------------------------------------------
+
+      - name: Build CPU-only inference image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ./Dockerfile
+          push: false
+          load: true
+          tags: fraud-api:ci
+
+      # ------------------------------------------------------
+      # 7. Verify installed package compatibility
+      # ------------------------------------------------------
+
+      - name: Verify container dependencies
+        run: |
+          docker run --rm \
+            --entrypoint python \
+            fraud-api:ci \
+            -m pip check
+
+      # ------------------------------------------------------
+      # 8. Verify synthetic application startup
+      # ------------------------------------------------------
+
+      - name: Test container without private artifacts
+        run: |
+          docker run --rm -i \
+            --entrypoint python \
+            fraud-api:ci - <<'PY'
+          from fastapi.testclient import TestClient
+          from app.main import create_app
+
+          # Inject a synthetic engine so that no private
+          # checkpoint or financial records are required.
+          test_app = create_app(
+              inference_factory=lambda: object()
+          )
+
+          with TestClient(test_app) as client:
+
+              health = client.get("/health")
+              readiness = client.get("/ready")
+
+              assert health.status_code == 200
+              assert health.json() == {"status": "alive"}
+
+              assert readiness.status_code == 200
+              assert readiness.json() == {"status": "ready"}
+
+          print("Container synthetic smoke test: PASS")
+          print("Private model artifacts: NOT ACCESSED")
+          PY
